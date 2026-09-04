@@ -1,0 +1,16 @@
+/* weather-icons.css
+   The condition icons in this project are emoji rendered inside
+   .forecast-icon (see ui.js `_miniIcon`). This keeps the app dependency-
+   free — no icon font or image sprite to load. If you'd rather use a
+   custom icon set (e.g. weathericons.io), replace `_miniIcon()` in
+   js/ui.js to return an <i class="wi wi-..."></i> tag and style it here.
+*/
+
+.forecast-icon {
+  line-height: 1;
+  filter: saturate(1.05);
+}
+
+[data-category='storm'] .forecast-icon {
+  animation: none; /* keep the strip calm; motion lives in the sky scene only */
+}

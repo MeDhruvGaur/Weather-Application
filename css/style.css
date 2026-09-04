@@ -1,0 +1,451 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --paper: #f7f4ec;
+  --paper-raised: #ffffff;
+  --ink: #171a1f;
+  --ink-soft: #565d6b;
+  --line: rgba(23, 26, 31, 0.12);
+  --gold: #e0932c;
+  --gold-ink: #8a5a13;
+  --radius: 14px;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-data: 'Space Grotesk', 'Inter', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.5rem 1rem;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.app-shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.app-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.wordmark span {
+  color: var(--gold-ink);
+  font-style: italic;
+}
+
+.tagline {
+  margin: 0.15rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+/* ---------- controls row ---------- */
+.controls {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.search-wrap {
+  position: relative;
+  flex: 1 1 260px;
+}
+
+.search-form {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.search-input:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
+.icon-btn,
+.search-submit {
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  border-radius: 999px;
+  padding: 0.6rem 0.95rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--ink);
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+.icon-btn:hover,
+.search-submit:hover {
+  border-color: var(--gold);
+}
+.icon-btn:active,
+.search-submit:active {
+  transform: scale(0.97);
+}
+.icon-btn:focus-visible,
+.search-submit:focus-visible,
+.search-input:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.suggestions {
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0.3rem;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(23, 26, 31, 0.1);
+  z-index: 20;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.suggestions button {
+  width: 100%;
+  text-align: left;
+  padding: 0.55rem 0.6rem;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+}
+.suggestions button:hover,
+.suggestions button:focus {
+  background: var(--paper);
+  outline: none;
+}
+.opt-name {
+  font-weight: 500;
+}
+.opt-meta {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- main panel ---------- */
+.weather-panel {
+  margin-top: 1.75rem;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1.25rem;
+}
+
+.scene {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  min-height: 320px;
+  border: 1px solid var(--line);
+}
+
+.scene canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.scene-overlay {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+.city-name {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  margin: 0;
+  font-weight: 500;
+}
+.city-meta {
+  margin: 0.15rem 0 0.9rem;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.temp-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+}
+
+.temp {
+  font-family: var(--font-data);
+  font-size: 4.2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.condition {
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.updated-at {
+  margin-top: 0.6rem;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+/* ---------- side column ---------- */
+.side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.favorite-btn {
+  border: 1px solid var(--line);
+  background: none;
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--gold-ink);
+}
+.favorite-btn:hover {
+  border-color: var(--gold);
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1rem;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.detail-label {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+.detail-value {
+  font-family: var(--font-data);
+  font-size: 1.15rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.favorites-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.chip {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: var(--ink);
+}
+.chip:hover {
+  border-color: var(--gold);
+}
+.chip-active {
+  border-color: var(--gold-ink);
+  background: rgba(224, 147, 44, 0.14);
+  font-weight: 500;
+}
+.favorites-empty {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- forecast strip ---------- */
+.forecast-section {
+  margin-top: 1.25rem;
+}
+.forecast-section h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0 0 0.75rem;
+}
+
+.forecast-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.75rem;
+}
+
+.forecast-day {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.9rem 0.7rem;
+  text-align: center;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.forecast-day:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold);
+}
+
+.forecast-dayname {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.35rem;
+}
+.forecast-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.35rem;
+}
+.forecast-temps {
+  font-family: var(--font-data);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.forecast-temps .lo {
+  color: var(--ink-soft);
+  margin-left: 0.4rem;
+  font-weight: 500;
+}
+.forecast-label {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin-top: 0.3rem;
+}
+
+.forecast-loading {
+  grid-column: 1 / -1;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.error-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  color: var(--ink-soft);
+}
+.retry-btn {
+  margin-top: 0.6rem;
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.retry-btn:hover {
+  border-color: var(--gold);
+}
+
+.app-footer {
+  margin-top: 2.5rem;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+.app-footer a {
+  color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .forecast-day {
+    transition: none;
+  }
+}
